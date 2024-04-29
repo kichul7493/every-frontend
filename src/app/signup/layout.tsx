@@ -1,3 +1,3 @@
-import Layout from "@/components/shared/layout/Layout";
+import LayoutProvider from "@/components/shared/layout/Layout";
 
-export default Layout;
+export default LayoutProvider("/login");
