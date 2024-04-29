@@ -1,12 +1,21 @@
+"use client";
+
 import Input from "@/components/shared/input/Input";
 import Link from "next/link";
-import React from "react";
+import { useRouter } from "next/navigation";
+import React, { FormEvent } from "react";
 
-const page = () => {
+const Page = () => {
+  const router = useRouter();
+
+  const onSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    router.push("/signup/verify-code");
+  };
   return (
     <>
       <h1 className="text-4xl font-semibold text-center mb-14">회원가입</h1>
-      <form>
+      <form onSubmit={onSubmit}>
         <Input name="이름" placeholder="이름을 입력해주세요." />
         <Input name="이메일" placeholder="이메일을 입력해주세요." />
         <Input name="비밀번호" placeholder="비밀번호를 입력해주세요." />
@@ -26,4 +35,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
