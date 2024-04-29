@@ -6,7 +6,7 @@ import React from "react";
 
 const page = () => {
   return (
-    <div className="px-7">
+    <div>
       <h1 className="text-center text-4xl mb-14">로그인</h1>
       <label className="block mb-7">
         <p className="ml-1 mb-1">이메일</p>
