@@ -21,7 +21,7 @@ export default function Home() {
       </div>
       <div>
         <div className="mx-7 pb-4 mb-4 border-b-[1px] border-b-white">
-          <div>
+          <Link href="/post/test">
             <div className="flex items-center gap-2 mb-3">
               <div className="w-8 h-8 rounded-full bg-gray-400"></div>
               <p className="text-xs">Verna Medhurst</p>
@@ -37,7 +37,7 @@ export default function Home() {
                 <p className="text-black text-sm font-semibold">Reactjs</p>
               </div>
             </div>
-          </div>
+          </Link>
         </div>
         <div className="mx-7 pb-4 mb-4 border-b-[1px] border-b-white">
           <div>
