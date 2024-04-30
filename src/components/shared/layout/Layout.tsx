@@ -1,6 +1,6 @@
 import Header from "../header/Header";
 
-const LayoutProvider = (href: string) =>
+const LayoutProvider = (href: string, withThumbnail?: boolean) =>
   function Layout({
     children,
   }: Readonly<{
@@ -8,7 +8,7 @@ const LayoutProvider = (href: string) =>
   }>) {
     return (
       <>
-        <Header href={href} />
+        <Header href={href} withThumbnail={withThumbnail} />
         <div className="px-7">{children}</div>
       </>
     );
