@@ -4,7 +4,7 @@ import Input from "@/components/shared/input/Input";
 import Link from "next/link";
 import React from "react";
 import { useFormState } from "react-dom";
-import createUser from "../actions/users/createUser";
+import createUser from "../../actions/users/createUser";
 
 const initialState: {
   errors: {

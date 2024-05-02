@@ -12,7 +12,7 @@ const page = () => {
       </div>
       <form>
         <div className="mb-[286px]">
-          <Input name="이메일" placeholder="이메일을 입력해주세요." />
+          <Input name="인증코드" placeholder="인증코드를 입력해주세요." />
         </div>
         <button className="w-full py-3 bg-main rounded-xl text-sm">
           이메일 인증
