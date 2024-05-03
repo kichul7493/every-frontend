@@ -1,16 +1,28 @@
+import { getSession } from "@/actions/users/auth";
 import Link from "next/link";
 
-export default function Home() {
+export default async function Home() {
+  const session = await getSession();
+
   return (
     <>
       <div className="py-3 flex justify-between items-center mx-7">
         <span className="text-3xl font-bold leading-8">Every</span>
-        <Link
-          href="/login"
-          className="bg-main py-[6px] px-3 rounded-3xl font-bold "
-        >
-          로그인
-        </Link>
+        {session ? (
+          <Link
+            href="/post/create"
+            className="bg-main py-[6px] px-3 rounded-3xl font-bold "
+          >
+            글쓰기
+          </Link>
+        ) : (
+          <Link
+            href="/login"
+            className="bg-main py-[6px] px-3 rounded-3xl font-bold "
+          >
+            로그인
+          </Link>
+        )}
       </div>
       <div className="px-7 flex gap-4 overflow-x-auto py-5 mb-5 scrollbar-hidden">
         <button className=" text-xl font-medium text-gray100">All</button>

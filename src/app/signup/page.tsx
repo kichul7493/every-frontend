@@ -7,7 +7,7 @@ import { useFormState } from "react-dom";
 import createUser from "../../actions/users/createUser";
 
 const initialState: {
-  errors: {
+  fieldErrors: {
     email?: string[];
     name?: string[];
     password?: string[];
@@ -15,7 +15,8 @@ const initialState: {
   };
   message?: string;
 } = {
-  errors: {},
+  fieldErrors: {},
+  message: "",
 };
 
 const Page = () => {
@@ -29,7 +30,7 @@ const Page = () => {
           name="name"
           placeholder="이름을 입력해주세요."
           required
-          errors={state?.errors?.name}
+          errors={state?.fieldErrors?.name}
         />
         <Input
           title="이메일"
@@ -37,7 +38,7 @@ const Page = () => {
           placeholder="이메일을 입력해주세요."
           required
           type="email"
-          errors={state?.errors?.email}
+          errors={state?.fieldErrors?.email}
         />
         <Input
           title="비밀번호"
@@ -45,7 +46,7 @@ const Page = () => {
           placeholder="비밀번호를 입력해주세요."
           required
           type="password"
-          errors={state?.errors?.password}
+          errors={state?.fieldErrors?.password}
         />
         <Input
           title="비밀번호 확인"
@@ -53,7 +54,7 @@ const Page = () => {
           placeholder="비밀번호를 다시 입력해주세요."
           required
           type="password"
-          errors={state?.errors?.passwordConfirm}
+          errors={state?.fieldErrors?.passwordConfirm}
         />
 
         {state?.message && <span>{state.message}</span>}
