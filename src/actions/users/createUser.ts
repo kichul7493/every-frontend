@@ -2,12 +2,10 @@
 
 import { z } from "zod";
 import bcrypt from "bcrypt";
-import { PrismaClient } from "@prisma/client";
 import { RedirectType, redirect } from "next/navigation";
 import nodemailer from "nodemailer";
 import generateRandomCode from "@/lib/generateCode";
-
-const prisma = new PrismaClient();
+import prisma from "@/lib/prismaClient";
 
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
@@ -55,7 +53,7 @@ export default async function createUser(prevState: any, formData: FormData) {
 
   if (!validatedFields.success) {
     return {
-      errors: validatedFields.error.flatten().fieldErrors,
+      fieldErrors: validatedFields.error.flatten().fieldErrors,
       message: "",
     };
   }
@@ -71,28 +69,33 @@ export default async function createUser(prevState: any, formData: FormData) {
         email: validatedFields.data.email,
         name: validatedFields.data.name,
         password: hashedPassword,
+        code,
+        status: "PENDING",
       },
     });
 
     await transporter.sendMail({
       from: process.env.SMTP_USER,
       to: user.email,
-      subject: "회원가입을 축하합니다.",
-      text: `환영합니다, ${user.name}님!`,
+      subject: "[Every] 회원가입을 축하합니다.",
+      text: `<h1>환영합니다, ${user.name}님!</h1><p>인증코드는 ${code}입니다.</p>`,
     });
   } catch (e: any) {
     if (e.code === "P2002") {
       return {
-        errors: {},
         message: "이미 존재하는 이메일입니다.",
+        fieldErrors: {},
       };
     } else {
       console.log(e);
       return {
-        errors: {},
         message: "알 수 없는 오류가 발생했습니다.",
+        fieldErrors: {},
       };
     }
   }
-  redirect("/login", RedirectType.push);
+  redirect(
+    `/signup/verify-code?email=${validatedFields.data.email}`,
+    RedirectType.push
+  );
 }
