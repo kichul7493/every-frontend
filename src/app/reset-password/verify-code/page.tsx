@@ -5,7 +5,7 @@ import EmailHiddenInput from "@/components/shared/emailHiddenInput/EmailHiddenIn
 import Input from "@/components/shared/input/Input";
 import SubmitButton from "@/components/shared/submitButton/SubmitButton";
 import Title from "@/components/shared/typography/Title";
-import React from "react";
+import React, { Suspense } from "react";
 import { useFormState } from "react-dom";
 
 const initialState: {
@@ -55,7 +55,9 @@ const Page = () => {
             type="password"
             placeholder="비밀번호를 다시 입력해주세요."
           />
-          <EmailHiddenInput />
+          <Suspense>
+            <EmailHiddenInput />
+          </Suspense>
         </div>
 
         <SubmitButton>비밀번호 변경</SubmitButton>
