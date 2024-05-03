@@ -3,19 +3,10 @@
 import { z } from "zod";
 import bcrypt from "bcrypt";
 import { RedirectType, redirect } from "next/navigation";
-import nodemailer from "nodemailer";
 import generateRandomCode from "@/lib/generateCode";
 import prisma from "@/lib/prismaClient";
-
-const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: parseInt(process.env.SMTP_PORT || "587"),
-  secure: process.env.SMTP_SECURE === "true",
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASSWORD,
-  },
-});
+import sendMail from "@/lib/sendMail";
+import { hash } from "@/lib/passwordEncoder";
 
 const schema = z
   .object({
@@ -58,7 +49,7 @@ export default async function createUser(prevState: any, formData: FormData) {
     };
   }
 
-  const hashedPassword = bcrypt.hashSync(validatedFields.data.password, 10);
+  const hashedPassword = hash(validatedFields.data.password);
 
   // 6자리의 랜덤 코드를 생성하는 함수를 작성해줘
   const code = generateRandomCode(6);
@@ -74,11 +65,10 @@ export default async function createUser(prevState: any, formData: FormData) {
       },
     });
 
-    await transporter.sendMail({
-      from: process.env.SMTP_USER,
+    await sendMail({
       to: user.email,
       subject: "[Every] 회원가입을 축하합니다.",
-      text: `<h1>환영합니다, ${user.name}님!</h1><p>인증코드는 ${code}입니다.</p>`,
+      html: `<h1>환영합니다, ${user.name}님!</h1><p>인증코드는 ${code}입니다.</p>`,
     });
   } catch (e: any) {
     if (e.code === "P2002") {

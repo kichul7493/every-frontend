@@ -5,6 +5,7 @@ import Link from "next/link";
 import React from "react";
 import { useFormState } from "react-dom";
 import createUser from "../../actions/users/createUser";
+import SubmitButton from "@/components/shared/submitButton/SubmitButton";
 
 const initialState: {
   fieldErrors: {
@@ -58,12 +59,7 @@ const Page = () => {
         />
 
         {state?.message && <span>{state.message}</span>}
-        <button
-          type="submit"
-          className="w-full py-3 text-sm font-semibold bg-main rounded-xl mt-7 mb-2"
-        >
-          회원가입
-        </button>
+        <SubmitButton>회원가입</SubmitButton>
         <Link className="flex justify-center gap-2" href="/login">
           <span className="text-xs">이미 회원이신가요?</span>
           <span className="text-xs text-main">로그인</span>

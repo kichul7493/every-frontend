@@ -2,6 +2,7 @@ import NextAuth, { CredentialsSignin } from "next-auth";
 import credentials from "next-auth/providers/credentials";
 import prisma from "./lib/prismaClient";
 import bcrypt from "bcrypt";
+import { compare } from "./lib/passwordEncoder";
 
 export const {
   handlers,
@@ -26,7 +27,7 @@ export const {
             });
           }
 
-          const isValid = bcrypt.compareSync(password as string, user.password);
+          const isValid = compare(password as string, user.password);
 
           if (!isValid) {
             throw new CredentialsSignin({
