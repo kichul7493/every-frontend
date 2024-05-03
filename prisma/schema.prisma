@@ -28,6 +28,7 @@ model tags {
 model posts {
   id       Int @id @default(autoincrement()) 
   title String @db.VarChar(50)
+  content String @db.Text
   slug String @db.VarChar(50) @unique
   tag tags @relation(fields: [tagId], references: [id])
   tagId Int 
