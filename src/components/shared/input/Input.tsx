@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import React, { HTMLInputTypeAttribute, InputHTMLAttributes } from "react";
 
 interface InputProps {
@@ -14,7 +15,10 @@ const Input = ({
     <label className="block mb-6 relative">
       <p className="ml-1 mb-1">{title}</p>
       <input
-        className="w-full bg-black100 text-sm placeholder:text-gray100 p-4 rounded-lg"
+        className={clsx([
+          "w-full bg-black100 text-sm placeholder:text-gray100 p-4 rounded-lg",
+          errors && "border-2 border-red-500",
+        ])}
         {...rest}
         name={name}
       />

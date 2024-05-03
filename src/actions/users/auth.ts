@@ -40,7 +40,10 @@ export const signInWithCredentials = async (
   } catch (error) {
     if (error instanceof CredentialsSignin) {
       return {
-        fieldErrors: {},
+        fieldErrors: {
+          email: ["이메일 혹은 비밀번호가 올바르지 않습니다."],
+          password: ["이메일 혹은 비밀번호가 올바르지 않습니다."],
+        },
         message: error.cause,
       };
     }
