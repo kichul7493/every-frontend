@@ -17,25 +17,47 @@ const initialState: {} = {
 
 const Page = () => {
   const [remember, setRemember] = React.useState(false);
-  const [email, setEmail] = React.useState(localStorage.getItem("email") || "");
+  const [email, setEmail] = React.useState("");
   const [state, formAction] = useFormState(signInWithCredentials, initialState);
 
-  console.log(state);
-
   const handleChangeRemember = (e: React.ChangeEvent<HTMLInputElement>) => {
+    localStorage.setItem("remember", e.target.checked ? "true" : "false");
     setRemember(e.target.checked);
   };
 
   const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+    localStorage.setItem("email", e.target.value);
     setEmail(e.target.value);
   };
 
   useEffect(() => {
-    if (remember) {
-      // Save email to local storage
-      localStorage.setItem("email", email);
-    }
+    return () => {
+      if (
+        localStorage.getItem("remember") === "false" ||
+        localStorage.getItem("remember") === null
+      ) {
+        localStorage.removeItem("email");
+        localStorage.removeItem("remember");
+      }
+    };
   }, [email, remember]);
+
+  useEffect(() => {
+    if (window) {
+      // Get email from local storage
+      const email = localStorage.getItem("email");
+      if (email) {
+        setEmail(email);
+      }
+
+      const remember = localStorage.getItem("remember");
+      if (remember === "true") {
+        setRemember(true);
+      } else {
+        setRemember(false);
+      }
+    }
+  }, []);
 
   return (
     <form action={formAction}>
