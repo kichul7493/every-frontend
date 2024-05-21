@@ -3,7 +3,7 @@ export default function generateSlug(title: string) {
   let slug = title.toLowerCase().trim();
 
   // 특수문자 및 공백을 대시로 변환합니다.
-  slug = slug.replace(/[^a-z0-9\s-]/g, "").replace(/\s+/g, "-");
+  slug = slug.replace(/[^a-z0-9\u3131-\uD79D\s-]/g, "").replace(/\s+/g, "-");
 
   // 여러 개의 대시를 하나로 줄입니다.
   slug = slug.replace(/-+/g, "-");
