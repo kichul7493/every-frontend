@@ -55,7 +55,7 @@ export default async function createUser(prevState: any, formData: FormData) {
   const code = generateRandomCode(6);
 
   try {
-    const user = await prisma.users.create({
+    const user = await prisma.user.create({
       data: {
         email: validatedFields.data.email,
         name: validatedFields.data.name,

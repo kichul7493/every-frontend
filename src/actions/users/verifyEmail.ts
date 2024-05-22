@@ -35,7 +35,7 @@ export default async function verifyEmail(prevState: any, formData: FormData) {
   }
 
   try {
-    const user = await prisma.users.findFirst({
+    const user = await prisma.user.findFirst({
       where: {
         email: validatedFields.data.email,
         code: validatedFields.data.code,
@@ -49,7 +49,7 @@ export default async function verifyEmail(prevState: any, formData: FormData) {
       };
     }
 
-    await prisma.users.update({
+    await prisma.user.update({
       where: {
         id: user.id,
       },

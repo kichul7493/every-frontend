@@ -29,7 +29,7 @@ export default async function sendVerifyCode(
     };
   }
 
-  const user = await prisma.users.findFirst({
+  const user = await prisma.user.findFirst({
     where: {
       email: validatedFields.data.email,
     },
@@ -45,7 +45,7 @@ export default async function sendVerifyCode(
   const code = generateRandomCode(6);
 
   try {
-    await prisma.users.update({
+    await prisma.user.update({
       where: {
         id: user.id,
       },

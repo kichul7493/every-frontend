@@ -1,7 +1,6 @@
 import NextAuth, { CredentialsSignin } from "next-auth";
 import credentials from "next-auth/providers/credentials";
 import prisma from "./lib/prismaClient";
-import bcrypt from "bcrypt";
 import { compare } from "./lib/passwordEncoder";
 
 export const {
@@ -15,7 +14,7 @@ export const {
     credentials({
       authorize: async ({ email, password }) => {
         if (email && password) {
-          const user = await prisma.users.findFirst({
+          const user = await prisma.user.findFirst({
             where: {
               email,
             },

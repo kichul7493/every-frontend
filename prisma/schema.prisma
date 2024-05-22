@@ -9,29 +9,36 @@ datasource db {
 }
 
 
-model users {
+model user {
   id       Int @id @default(autoincrement()) 
   name     String @db.VarChar(255)
   email    String @unique
   code     String @db.VarChar(6)
   status   String @db.VarChar(10)
   password String
-  posts posts[]
+  thumbnail String? @db.VarChar(255)
+  posts post[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
-model tags {
+model tag {
   id       Int @id @default(autoincrement()) 
   name String @db.VarChar(20)
-  posts posts[]
+  posts post[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
-model posts {
+model post {
   id       Int @id @default(autoincrement()) 
   title String @db.VarChar(50)
   content String @db.Text
   slug String @db.VarChar(50) @unique
-  tag tags @relation(fields: [tagId], references: [id])
+  tag tag @relation(fields: [tagId], references: [id])
   tagId Int 
-  author users @relation(fields: [authorId], references: [id])
+  author user @relation(fields: [authorId], references: [id])
   authorId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

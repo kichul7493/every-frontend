@@ -6,7 +6,6 @@ import { getSession } from "../users/auth";
 import generateSlug from "@/lib/generateSlug";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { connect } from "http2";
 
 const schema = z.object({
   title: z.string({
@@ -46,21 +45,21 @@ export default async function createPost(prevState: any, formData: FormData) {
 
     const slug = generateSlug(validatedFields.data.title);
 
-    let tag = await prisma.tags.findFirst({
+    let tag = await prisma.tag.findFirst({
       where: {
         name: validatedFields.data.tag,
       },
     });
 
     if (!tag) {
-      tag = await prisma.tags.create({
+      tag = await prisma.tag.create({
         data: {
           name: validatedFields.data.tag,
         },
       });
     }
 
-    await prisma.posts.create({
+    await prisma.post.create({
       data: {
         title: validatedFields.data.title,
         content: validatedFields.data.content,
