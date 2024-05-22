@@ -1,8 +1,12 @@
+import { getPosts } from "@/actions/posts/getPosts";
 import { getSession } from "@/actions/users/auth";
+import PostItem from "@/components/post/postItem/PostItem";
 import Link from "next/link";
 
 export default async function Home() {
   const session = await getSession();
+
+  const posts = await getPosts();
 
   return (
     <>
@@ -32,120 +36,28 @@ export default async function Home() {
         <button className=" text-xl font-medium text-gray100">Design</button>
       </div>
       <div>
-        <div className="mx-7 pb-4 mb-4 border-b-[1px] border-b-white">
-          <Link href="/post/test">
-            <div className="flex items-center gap-2 mb-3">
-              <div className="w-8 h-8 rounded-full bg-gray-400"></div>
-              <p className="text-xs">Verna Medhurst</p>
-              <p className="text-xs text-gray100">2021-03-17</p>
-            </div>
-            <h2 className="font-bold line-clamp-2 mb-5">
-              Lorem ipsum dolor sit amet consectetur. Feugiat nibh ultrices
-              or...Lorem ipsum dolor sit amet consectetur. Feugiat nibh ultrices
-              or...
-            </h2>
-            <div>
-              <div className="py-1 px-2 rounded-xl bg-gray300 inline-block">
-                <p className="text-black text-sm font-semibold">Reactjs</p>
-              </div>
-            </div>
-          </Link>
-        </div>
-        <div className="mx-7 pb-4 mb-4 border-b-[1px] border-b-white">
+        {posts.map((post) => {
+          return <PostItem key={post.id} post={post} />;
+        })}
+      </div>
+      <div className="mx-7 pb-4 mb-4 border-b-[1px] border-b-white">
+        <Link href="/post/test">
+          <div className="flex items-center gap-2 mb-3">
+            <div className="w-8 h-8 rounded-full bg-gray-400"></div>
+            <p className="text-xs">Verna Medhurst</p>
+            <p className="text-xs text-gray100">2021-03-17</p>
+          </div>
+          <h2 className="font-bold line-clamp-2 mb-5">
+            Lorem ipsum dolor sit amet consectetur. Feugiat nibh ultrices
+            or...Lorem ipsum dolor sit amet consectetur. Feugiat nibh ultrices
+            or...
+          </h2>
           <div>
-            <div className="flex items-center gap-2 mb-3">
-              <div className="w-8 h-8 rounded-full bg-gray-400"></div>
-              <p className="text-xs">Verna Medhurst</p>
-              <p className="text-xs text-gray100">2021-03-17</p>
-            </div>
-            <h2 className="font-bold line-clamp-2 mb-5">
-              Lorem ipsum dolor sit amet consectetur. Feugiat nibh ultrices
-              or...Lorem ipsum dolor sit amet consectetur. Feugiat nibh ultrices
-              or...
-            </h2>
-            <div>
-              <div className="py-1 px-2 rounded-xl bg-gray300 inline-block">
-                <p className="text-black text-sm font-semibold">Reactjs</p>
-              </div>
+            <div className="py-1 px-2 rounded-xl bg-gray300 inline-block">
+              <p className="text-black text-sm font-semibold">Reactjs</p>
             </div>
           </div>
-        </div>
-        <div className="mx-7 pb-4 mb-4 border-b-[1px] border-b-white">
-          <div>
-            <div className="flex items-center gap-2 mb-3">
-              <div className="w-8 h-8 rounded-full bg-gray-400"></div>
-              <p className="text-xs">Verna Medhurst</p>
-              <p className="text-xs text-gray100">2021-03-17</p>
-            </div>
-            <h2 className="font-bold line-clamp-2 mb-5">
-              Lorem ipsum dolor sit amet consectetur. Feugiat nibh ultrices
-              or...Lorem ipsum dolor sit amet consectetur. Feugiat nibh ultrices
-              or...
-            </h2>
-            <div>
-              <div className="py-1 px-2 rounded-xl bg-gray300 inline-block">
-                <p className="text-black text-sm font-semibold">Reactjs</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="mx-7 pb-4 mb-4 border-b-[1px] border-b-white">
-          <div>
-            <div className="flex items-center gap-2 mb-3">
-              <div className="w-8 h-8 rounded-full bg-gray-400"></div>
-              <p className="text-xs">Verna Medhurst</p>
-              <p className="text-xs text-gray100">2021-03-17</p>
-            </div>
-            <h2 className="font-bold line-clamp-2 mb-5">
-              Lorem ipsum dolor sit amet consectetur. Feugiat nibh ultrices
-              or...Lorem ipsum dolor sit amet consectetur. Feugiat nibh ultrices
-              or...
-            </h2>
-            <div>
-              <div className="py-1 px-2 rounded-xl bg-gray300 inline-block">
-                <p className="text-black text-sm font-semibold">Reactjs</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="mx-7 pb-4 mb-4 border-b-[1px] border-b-white">
-          <div>
-            <div className="flex items-center gap-2 mb-3">
-              <div className="w-8 h-8 rounded-full bg-gray-400"></div>
-              <p className="text-xs">Verna Medhurst</p>
-              <p className="text-xs text-gray100">2021-03-17</p>
-            </div>
-            <h2 className="font-bold line-clamp-2 mb-5">
-              Lorem ipsum dolor sit amet consectetur. Feugiat nibh ultrices
-              or...Lorem ipsum dolor sit amet consectetur. Feugiat nibh ultrices
-              or...
-            </h2>
-            <div>
-              <div className="py-1 px-2 rounded-xl bg-gray300 inline-block">
-                <p className="text-black text-sm font-semibold">Reactjs</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="mx-7 pb-4 mb-4 border-b-[1px] border-b-white">
-          <div>
-            <div className="flex items-center gap-2 mb-3">
-              <div className="w-8 h-8 rounded-full bg-gray-400"></div>
-              <p className="text-xs">Verna Medhurst</p>
-              <p className="text-xs text-gray100">2021-03-17</p>
-            </div>
-            <h2 className="font-bold line-clamp-2 mb-5">
-              Lorem ipsum dolor sit amet consectetur. Feugiat nibh ultrices
-              or...Lorem ipsum dolor sit amet consectetur. Feugiat nibh ultrices
-              or...
-            </h2>
-            <div>
-              <div className="py-1 px-2 rounded-xl bg-gray300 inline-block">
-                <p className="text-black text-sm font-semibold">Reactjs</p>
-              </div>
-            </div>
-          </div>
-        </div>
+        </Link>
       </div>
     </>
   );
