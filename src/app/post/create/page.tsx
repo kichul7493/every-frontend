@@ -1,12 +1,13 @@
 "use client";
 
 import Input from "@/components/shared/input/Input";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./editer.css";
 import { useFormState } from "react-dom";
 import createPost from "@/actions/posts/createPost";
 import SubmitButton from "@/components/shared/submitButton/SubmitButton";
 import dynamic from "next/dynamic";
+import { toast } from "react-toastify";
 
 const CustomEditor = dynamic(
   () => {
@@ -30,6 +31,12 @@ const initialState: {
 const Page = () => {
   const [content, setContent] = useState("");
   const [state, formAction] = useFormState(createPost, initialState);
+
+  useEffect(() => {
+    if (state.message) {
+      toast.error(state.message);
+    }
+  }, [state]);
 
   return (
     <form action={formAction} className="mb-2">
