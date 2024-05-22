@@ -1,7 +1,7 @@
 import { getPostWithSlug } from "@/actions/posts/getPostWithSlug";
 import formatDate from "@/lib/formatDate";
 import React from "react";
-import "@/components/post/editor/CustomEditor.css";
+import "@/components/post/editor/customEditor.css";
 
 const page = async ({ params }: { params: { slug: string } }) => {
   const decodedSlug = decodeURIComponent(params.slug);
