@@ -1,3 +1,5 @@
+import Avatar from "@/components/shared/avatar/Avatar";
+import formatDate from "@/lib/formatDate";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -25,19 +27,9 @@ const PostItem = ({ post }: PostItemProps) => {
     <div className="mx-7 pb-4 mb-4 border-b-[1px] border-b-white">
       <Link href={`/post/${post.slug}`}>
         <div className="flex items-center gap-2 mb-3">
-          {post.author?.thumbnail ? (
-            <Image
-              src={post.author.thumbnail}
-              alt="thumbnail"
-              className="w-8 h-8 rounded-full"
-            />
-          ) : (
-            <div className="w-8 h-8 rounded-full bg-gray-400"></div>
-          )}
+          <Avatar src={post.author.thumbnail} />
           <p className="text-xs">{post.author.name}</p>
-          <p className="text-xs text-gray100">{`${post.createdAt.getFullYear()}-${
-            post.createdAt.getMonth() + 1
-          }-${post.createdAt.getDate()}`}</p>
+          <p className="text-xs text-gray100">{formatDate(post.createdAt)}</p>
         </div>
         <h2 className="font-bold line-clamp-2 mb-5">{post.title}</h2>
         <div>

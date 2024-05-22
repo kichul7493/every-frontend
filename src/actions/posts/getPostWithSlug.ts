@@ -1,17 +1,15 @@
 import prisma from "@/lib/prismaClient";
 
-export const getPosts = async (page: number = 0, limit: number = 10) => {
-  return await prisma.post.findMany({
-    take: limit,
-    skip: page * limit,
-    orderBy: {
-      createdAt: "desc",
+export const getPostWithSlug = async (slug: string) => {
+  return await prisma.post.findFirst({
+    where: {
+      slug,
     },
     select: {
       id: true,
       title: true,
+      content: true,
       createdAt: true,
-      slug: true,
       author: {
         select: {
           name: true,
