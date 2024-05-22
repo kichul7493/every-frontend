@@ -1,6 +1,7 @@
 import React from "react";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import Editor from "ckeditor5-custom-build";
+import "./customEditor.css";
 
 const editorConfiguration = {
   toolbar: [
@@ -20,6 +21,7 @@ const editorConfiguration = {
     "insertTable",
     "undo",
     "redo",
+    "codeBlock",
   ],
   simpleUpload: {
     uploadUrl: "/api/post/upload",

@@ -10,7 +10,7 @@ import dynamic from "next/dynamic";
 
 const CustomEditor = dynamic(
   () => {
-    return import("@/components/blog/editor/CustomEditor");
+    return import("@/components/post/editor/CustomEditor");
   },
   { ssr: false }
 );
@@ -49,7 +49,7 @@ const Page = () => {
         errors={state.fieldErrors.tag}
         placeholder="태그를 입력해주세요."
       />
-      <div className="h-full">
+      <div className="h-full mb-6">
         <span className="block ml-1 mb-1">본문</span>
         <input className="hidden" name="content" readOnly value={content} />
         <CustomEditor initialData={content} setData={setContent} />
