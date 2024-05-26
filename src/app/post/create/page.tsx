@@ -8,6 +8,7 @@ import createPost from "@/actions/posts/createPost";
 import SubmitButton from "@/components/shared/submitButton/SubmitButton";
 import dynamic from "next/dynamic";
 import { toast } from "react-toastify";
+import { initialState } from "@/constants/formInitialState";
 
 const CustomEditor = dynamic(
   () => {
@@ -15,18 +16,6 @@ const CustomEditor = dynamic(
   },
   { ssr: false }
 );
-
-const initialState: {
-  fieldErrors: {
-    title?: string[];
-    tag?: string[];
-    content?: string[];
-  };
-  message?: string;
-} = {
-  fieldErrors: {},
-  message: "",
-};
 
 const Page = () => {
   const [content, setContent] = useState("");

@@ -77,7 +77,7 @@ export default async function createPost(prevState: any, formData: FormData) {
       },
     });
   } catch (e) {
-    console.log(e);
+    console.error(e);
     return {
       message: "게시물 작성에 실패했습니다.",
       fieldErrors: {},
