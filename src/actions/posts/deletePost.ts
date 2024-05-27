@@ -26,12 +26,8 @@ export default async function deletePost(prevState: any, formData: FormData) {
 
   const { slug } = validatedFields.data;
 
-  console.log(slug);
-
   try {
     const session = await getSession();
-
-    console.log(session);
 
     if (!session || !session.user?.email) {
       return {
