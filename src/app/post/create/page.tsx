@@ -10,7 +10,6 @@ import dynamic from "next/dynamic";
 import { toast } from "react-toastify";
 import { initialState } from "@/constants/formInitialState";
 import { useSearchParams } from "next/navigation";
-import { getPostWithSlug } from "@/actions/posts/getPostWithSlug";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 
