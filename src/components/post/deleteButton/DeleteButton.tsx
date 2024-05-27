@@ -13,7 +13,7 @@ const DeleteButton = ({ slug }: DeleteButtonProps) => {
   const [state, formAction] = useFormState(deletePost, initialState);
 
   return (
-    <form action={formAction}>
+    <form className="h-7" action={formAction}>
       <input type="hidden" name="slug" value={slug} />
       <button>
         <svg

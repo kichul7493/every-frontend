@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import Editor from "ckeditor5-custom-build";
 import "./customEditor.css";
@@ -29,21 +29,26 @@ const editorConfiguration = {
 };
 
 interface CustomEditorProps {
-  initialData: string;
-  setData: React.Dispatch<React.SetStateAction<string>>;
+  initData?: string;
 }
 
-const CustomEditor = ({ initialData, setData }: CustomEditorProps) => {
+const CustomEditor = ({ initData }: CustomEditorProps) => {
+  const [content, setContent] = useState(initData || "");
+
   return (
-    <CKEditor
-      editor={Editor}
-      config={editorConfiguration}
-      data={initialData}
-      onChange={(event, editor) => {
-        const data = editor.getData();
-        setData(data);
-      }}
-    />
+    <>
+      <input className="hidden" name="content" readOnly value={content} />
+
+      <CKEditor
+        editor={Editor}
+        config={editorConfiguration}
+        data={content}
+        onChange={(event, editor) => {
+          const data = editor.getData();
+          setContent(data);
+        }}
+      />
+    </>
   );
 };
 

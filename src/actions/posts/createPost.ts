@@ -17,6 +17,7 @@ const schema = z.object({
   tag: z.string({
     message: "태그를 입력해주세요.",
   }),
+  slug: z.string(),
 });
 
 export default async function createPost(prevState: any, formData: FormData) {
@@ -24,6 +25,7 @@ export default async function createPost(prevState: any, formData: FormData) {
     title: formData.get("title"),
     content: formData.get("content"),
     tag: formData.get("tag"),
+    slug: formData.get("slug"),
   });
 
   if (!validatedFields.success) {
@@ -33,16 +35,55 @@ export default async function createPost(prevState: any, formData: FormData) {
     };
   }
 
-  try {
-    const session = await getSession();
+  const session = await getSession();
 
-    if (!session || !session.user?.email) {
-      return {
-        message: "로그인이 필요합니다.",
-        fieldErrors: {},
-      };
+  if (!session || !session.user?.email) {
+    return {
+      message: "로그인이 필요합니다.",
+      fieldErrors: {},
+    };
+  }
+
+  if (validatedFields.data.slug) {
+    console.log("slug exists", validatedFields.data.slug);
+
+    const newSlug = generateSlug(validatedFields.data.title);
+
+    let tag = await prisma.tag.findFirst({
+      where: {
+        name: validatedFields.data.tag,
+      },
+    });
+
+    if (!tag) {
+      tag = await prisma.tag.create({
+        data: {
+          name: validatedFields.data.tag,
+        },
+      });
     }
 
+    await prisma.post.update({
+      where: {
+        slug: validatedFields.data.slug,
+      },
+      data: {
+        title: validatedFields.data.title,
+        content: validatedFields.data.content,
+        slug: newSlug,
+        tag: {
+          connect: {
+            id: tag.id,
+          },
+        },
+      },
+    });
+
+    revalidatePath("/");
+    redirect("/");
+  }
+
+  try {
     const slug = generateSlug(validatedFields.data.title);
 
     let tag = await prisma.tag.findFirst({

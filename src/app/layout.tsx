@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
+import Provider from "@/components/provider/Provider";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -26,7 +27,7 @@ export default function RootLayout({
       <body
         className={`${pretendard.className} sm:max-w-[645px] mx-auto w-full h-screen bg-[#181A20] text-white `}
       >
-        {children}
+        <Provider>{children}</Provider>
         <ToastContainer
           position="top-right"
           autoClose={5000}
