@@ -16,6 +16,7 @@ model user {
   code     String @db.VarChar(6)
   status   String @db.VarChar(10)
   password String
+  salt     String @db.VarChar(255)
   thumbnail String? @db.VarChar(255)
   posts post[]
   createdAt DateTime @default(now())

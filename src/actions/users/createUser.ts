@@ -1,7 +1,6 @@
 "use server";
 
 import { z } from "zod";
-import bcrypt from "bcrypt";
 import { RedirectType, redirect } from "next/navigation";
 import generateRandomCode from "@/lib/generateCode";
 import prisma from "@/lib/prismaClient";
@@ -49,7 +48,7 @@ export default async function createUser(prevState: any, formData: FormData) {
     };
   }
 
-  const hashedPassword = hash(validatedFields.data.password);
+  const { password, salt } = hash(validatedFields.data.password);
 
   // 6자리의 랜덤 코드를 생성하는 함수를 작성해줘
   const code = generateRandomCode(6);
@@ -59,7 +58,8 @@ export default async function createUser(prevState: any, formData: FormData) {
       data: {
         email: validatedFields.data.email,
         name: validatedFields.data.name,
-        password: hashedPassword,
+        password,
+        salt,
         code,
         status: "PENDING",
       },

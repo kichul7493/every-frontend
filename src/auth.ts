@@ -26,7 +26,7 @@ export const {
             });
           }
 
-          const isValid = compare(password as string, user.password);
+          const isValid = compare(password as string, user.password, user.salt);
 
           if (!isValid) {
             throw new CredentialsSignin({

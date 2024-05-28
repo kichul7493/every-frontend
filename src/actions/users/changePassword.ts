@@ -50,7 +50,7 @@ export default async function changePassword(
   }
 
   try {
-    const hashedPassword = hash(validatedFields.data.password);
+    const { password, salt } = hash(validatedFields.data.password);
 
     const user = await prisma.user.findFirst({
       where: {
@@ -71,7 +71,8 @@ export default async function changePassword(
         id: user.id,
       },
       data: {
-        password: hashedPassword,
+        password,
+        salt,
       },
     });
   } catch (e) {
