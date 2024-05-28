@@ -2,7 +2,6 @@
 
 import Input from "@/components/shared/input/Input";
 import React, { Suspense, useEffect, useState } from "react";
-import "./editer.css";
 import { useFormState } from "react-dom";
 import createPost from "@/actions/posts/createPost";
 import SubmitButton from "@/components/shared/submitButton/SubmitButton";
@@ -38,6 +37,7 @@ const PostCreatePage = () => {
     queryKey: ["post", slug],
     queryFn: () => axios.get(`/api/post/update/${slug}`),
     enabled: !!slug,
+    gcTime: 0,
   });
 
   const [title, setTitle] = useState("");
