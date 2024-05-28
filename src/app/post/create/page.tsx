@@ -1,7 +1,7 @@
 "use client";
 
 import Input from "@/components/shared/input/Input";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import "./editer.css";
 import { useFormState } from "react-dom";
 import createPost from "@/actions/posts/createPost";
@@ -21,6 +21,14 @@ const CustomEditor = dynamic(
 );
 
 const Page = () => {
+  return (
+    <Suspense>
+      <PostCreatePage />
+    </Suspense>
+  );
+};
+
+const PostCreatePage = () => {
   const searchParams = useSearchParams();
 
   const [state, formAction] = useFormState(createPost, initialState);
