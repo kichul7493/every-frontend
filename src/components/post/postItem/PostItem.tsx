@@ -29,7 +29,9 @@ const PostItem = ({ post }: PostItemProps) => {
         <div className="flex items-center gap-2 mb-3">
           <Avatar src={post.author.thumbnail} />
           <p className="text-xs">{post.author.name}</p>
-          <p className="text-xs text-gray100">{formatDate(post.createdAt)}</p>
+          <p className="text-xs text-gray100">
+            {formatDate(new Date(post.createdAt))}
+          </p>
         </div>
         <h2 className="font-bold line-clamp-2 mb-5">{post.title}</h2>
         <div>
