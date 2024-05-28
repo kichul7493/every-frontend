@@ -45,8 +45,6 @@ export default async function createPost(prevState: any, formData: FormData) {
   }
 
   if (validatedFields.data.slug) {
-    console.log("slug exists", validatedFields.data.slug);
-
     const newSlug = generateSlug(validatedFields.data.title);
 
     let tag = await prisma.tag.findFirst({

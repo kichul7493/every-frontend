@@ -27,12 +27,12 @@
     "zod": "^3.23.5"
   },
   "devDependencies": {
-    "@types/bcrypt": "^5.0.2",
     "@types/crypto-js": "^4.2.2",
     "@types/node": "^20",
     "@types/nodemailer": "^6.4.14",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "cypress": "^13.10.0",
     "eslint": "^8",
     "eslint-config-next": "14.2.3",
     "postcss": "^8",
