@@ -19,8 +19,6 @@ export default async function Home({
 
   const tags = await getTags();
 
-  console.log(tags);
-
   return (
     <>
       <div className="py-3 flex justify-between items-center mx-7">
