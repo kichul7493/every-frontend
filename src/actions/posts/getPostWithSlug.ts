@@ -1,4 +1,4 @@
-import prisma from "@/lib/prismaClient";
+import prisma from "@/utils/prismaClient";
 
 export const getPostWithSlug = async (slug: string) => {
   return await prisma.post.findFirst({

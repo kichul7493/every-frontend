@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import prisma from "@/lib/prismaClient";
+import prisma from "@/utils/prismaClient";
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
   const tag = req.nextUrl.searchParams.get("tag");

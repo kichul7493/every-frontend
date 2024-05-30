@@ -1,4 +1,4 @@
-import prisma from "@/lib/prismaClient";
+import prisma from "@/utils/prismaClient";
 
 export const getPosts = async (
   tagName: string,

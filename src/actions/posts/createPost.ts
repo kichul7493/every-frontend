@@ -1,9 +1,9 @@
 "use server";
 
-import prisma from "@/lib/prismaClient";
+import prisma from "@/utils/prismaClient";
 import { z } from "zod";
 import { getSession } from "../users/auth";
-import generateSlug from "@/lib/generateSlug";
+import generateSlug from "@/utils/generateSlug";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 

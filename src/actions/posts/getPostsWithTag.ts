@@ -1,7 +1,7 @@
-import axios from "axios";
+import axiosInstance from "@/utils/axios";
 
 export default async function getPostsWithTag(tag: string) {
-  const res = await axios.get(`http://localhost:3000/api/post?tag=${tag}`);
+  const res = await axiosInstance.get(`/post?tag=${tag}`);
 
   if (res.status !== 200) throw new Error(res.statusText);
 

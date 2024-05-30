@@ -1,8 +1,8 @@
 "use server";
 
-import generateRandomCode from "@/lib/generateCode";
-import prisma from "@/lib/prismaClient";
-import sendMail from "@/lib/sendMail";
+import generateRandomCode from "@/utils/generateCode";
+import prisma from "@/utils/prismaClient";
+import sendMail from "@/utils/sendMail";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 

@@ -1,5 +1,5 @@
 import { getPostWithSlug } from "@/actions/posts/getPostWithSlug";
-import formatDate from "@/lib/formatDate";
+import formatDate from "@/utils/formatDate";
 import React from "react";
 import Avatar from "@/components/shared/avatar/Avatar";
 import DeleteButton from "@/components/post/deleteButton/DeleteButton";

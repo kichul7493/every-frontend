@@ -1,7 +1,7 @@
 "use server";
 
-import { hash } from "@/lib/passwordEncoder";
-import prisma from "@/lib/prismaClient";
+import { hash } from "@/utils/passwordEncoder";
+import prisma from "@/utils/prismaClient";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 

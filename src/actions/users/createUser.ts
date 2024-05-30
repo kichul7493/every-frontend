@@ -2,10 +2,10 @@
 
 import { z } from "zod";
 import { RedirectType, redirect } from "next/navigation";
-import generateRandomCode from "@/lib/generateCode";
-import prisma from "@/lib/prismaClient";
-import sendMail from "@/lib/sendMail";
-import { hash } from "@/lib/passwordEncoder";
+import generateRandomCode from "@/utils/generateCode";
+import prisma from "@/utils/prismaClient";
+import sendMail from "@/utils/sendMail";
+import { hash } from "@/utils/passwordEncoder";
 
 const schema = z
   .object({

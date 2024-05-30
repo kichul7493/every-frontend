@@ -1,5 +1,5 @@
 import Avatar from "@/components/shared/avatar/Avatar";
-import formatDate from "@/lib/formatDate";
+import formatDate from "@/utils/formatDate";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";

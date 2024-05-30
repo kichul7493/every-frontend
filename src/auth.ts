@@ -1,7 +1,7 @@
 import NextAuth, { CredentialsSignin } from "next-auth";
 import credentials from "next-auth/providers/credentials";
-import prisma from "./lib/prismaClient";
-import { compare } from "./lib/passwordEncoder";
+import prisma from "./utils/prismaClient";
+import { compare } from "./utils/passwordEncoder";
 
 export const {
   handlers,

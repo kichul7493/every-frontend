@@ -1,6 +1,6 @@
 "use server";
 
-import prisma from "@/lib/prismaClient";
+import prisma from "@/utils/prismaClient";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
