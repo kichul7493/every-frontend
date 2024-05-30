@@ -4,6 +4,17 @@ import prisma from "@/lib/prismaClient";
 export async function GET(req: NextRequest): Promise<NextResponse> {
   const tag = req.nextUrl.searchParams.get("tag");
 
+  if (!tag) {
+    return NextResponse.json(
+      {
+        message: "Tag is required",
+      },
+      {
+        status: 400,
+      }
+    );
+  }
+
   if (tag === "all") {
     const posts = await prisma.post.findMany({
       select: {
@@ -11,6 +22,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
         title: true,
         content: true,
         createdAt: true,
+        slug: true,
         tag: {
           select: {
             name: true,
