@@ -59,6 +59,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
         title: true,
         content: true,
         createdAt: true,
+        slug: true,
         tag: {
           select: {
             name: true,
