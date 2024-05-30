@@ -18,6 +18,7 @@ const PostList = () => {
 
   return (
     <div>
+      {data.posts.length === 0 && <p>게시글이 없습니다.</p>}
       {data.posts?.map((post: any) => {
         return <PostItem key={post.id} post={post} />;
       })}
