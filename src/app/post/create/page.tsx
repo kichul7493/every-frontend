@@ -85,13 +85,11 @@ const PostCreatePage = () => {
       />
       <div className="h-full mb-6">
         <span className="block ml-1 mb-1">본문</span>
-        <Suspense>
-          <CustomEditor initData={data?.data.post.content} />
-        </Suspense>
+        <CustomEditor initData={data?.data.post.content} />
       </div>
       <SubmitButton>글작성</SubmitButton>
     </form>
   );
 };
 
-export default PostCreatePage;
+export default Page;
