@@ -1,11 +1,10 @@
 import { getPostWithSlug } from "@/actions/posts/getPostWithSlug";
 import formatDate from "@/utils/formatDate";
 import React from "react";
-import Avatar from "@/components/shared/avatar/Avatar";
-import DeleteButton from "@/components/post/deleteButton/DeleteButton";
-import EditButton from "@/components/post/editButton/EditButton";
 import { getSession } from "@/actions/users/auth";
-import PostContent from "@/components/post/postContent/PostContent";
+import PostContent from "@/components/post/detail/postContent/PostContent";
+import AuthorInfo from "@/components/post/detail/authorInfo/AuthorInfo";
+import PostTitle from "@/components/post/detail/postTitle/PostTitle";
 
 const Page = async ({ params }: { params: { slug: string } }) => {
   const decodedSlug = decodeURIComponent(params.slug);
@@ -23,26 +22,14 @@ const Page = async ({ params }: { params: { slug: string } }) => {
   return (
     <>
       <div className="mt-8 mb-7">
-        <h1 className="text-2xl tracking-[-2.5%] mb-3 line-clamp-2">
-          {post.title}
-        </h1>
-        <div className="w-full flex items-center justify-between">
-          <div className="flex gap-3">
-            <Avatar src={post.author.thumbnail} />
-            <div className="flex flex-col">
-              <span className="text-xs">{post.author.name}</span>
-              <span className="text-xs text-gray100">
-                {formatDate(post.createdAt)}
-              </span>
-            </div>
-          </div>
-          {isAuthor && (
-            <div className="flex gap-2 items-center">
-              <EditButton slug={decodedSlug} />
-              <DeleteButton slug={decodedSlug} />
-            </div>
-          )}
-        </div>
+        <PostTitle title={post.title} />
+        <AuthorInfo
+          thumbnail={post.author.thumbnail}
+          authorName={post.author.name}
+          createdAt={formatDate(post.createdAt)}
+          isAuthor={isAuthor}
+          slug={decodedSlug}
+        />
       </div>
       <PostContent content={post.content} />
     </>
