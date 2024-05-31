@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/utils/prismaClient";
+import generateSlug from "@/utils/generateSlug";
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
   const tag = req.nextUrl.searchParams.get("tag");
@@ -85,4 +86,121 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
       }
     );
   }
+}
+
+export async function POST(req: NextRequest) {
+  const { title, content, tagName, authorEmail } = await req.json();
+
+  if (!title || !content || !tagName) {
+    return NextResponse.json(
+      {
+        message: "Title, content, tagName are required",
+      },
+      {
+        status: 400,
+      }
+    );
+  }
+
+  const slug = generateSlug(title);
+
+  let tag = await prisma.tag.findFirst({
+    where: {
+      name: tagName,
+    },
+  });
+
+  if (!tag) {
+    tag = await prisma.tag.create({
+      data: {
+        name: tagName,
+      },
+    });
+  }
+
+  const post = await prisma.post.create({
+    data: {
+      title,
+      content,
+      slug,
+      author: {
+        connect: {
+          email: authorEmail,
+        },
+      },
+      tag: {
+        connect: {
+          id: tag.id,
+        },
+      },
+    },
+  });
+
+  return NextResponse.json(
+    {
+      message: "Post created",
+    },
+    {
+      status: 201,
+    }
+  );
+}
+
+export async function PUT(req: NextRequest) {
+  const { title, content, tagName, authorEmail, slug } = await req.json();
+
+  if (!title || !content || !tagName || !authorEmail || !slug) {
+    return NextResponse.json(
+      {
+        message: "Title, content, tagName, authorEmail, slug are required",
+      },
+      {
+        status: 400,
+      }
+    );
+  }
+
+  const newSlug = generateSlug(title);
+
+  let tag = await prisma.tag.findFirst({
+    where: {
+      name: tagName,
+    },
+  });
+
+  if (!tag) {
+    tag = await prisma.tag.create({
+      data: {
+        name: tagName,
+      },
+    });
+  }
+
+  await prisma.post.update({
+    where: {
+      slug,
+      author: {
+        email: authorEmail,
+      },
+    },
+    data: {
+      title,
+      content,
+      slug: newSlug,
+      tag: {
+        connect: {
+          id: tag.id,
+        },
+      },
+    },
+  });
+
+  return NextResponse.json(
+    {
+      message: "Post updated",
+    },
+    {
+      status: 200,
+    }
+  );
 }

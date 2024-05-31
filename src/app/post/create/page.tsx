@@ -35,7 +35,7 @@ const PostCreatePage = () => {
 
   const { data, isLoading } = useQuery({
     queryKey: ["post", slug],
-    queryFn: () => axios.get(`/api/post/update/${slug}`),
+    queryFn: () => axios.get(`/api/post/${slug}`),
     enabled: !!slug,
     gcTime: 0,
   });
@@ -85,11 +85,13 @@ const PostCreatePage = () => {
       />
       <div className="h-full mb-6">
         <span className="block ml-1 mb-1">본문</span>
-        <CustomEditor initData={data?.data.post.content} />
+        <Suspense>
+          <CustomEditor initData={data?.data.post.content} />
+        </Suspense>
       </div>
       <SubmitButton>글작성</SubmitButton>
     </form>
   );
 };
 
-export default Page;
+export default PostCreatePage;

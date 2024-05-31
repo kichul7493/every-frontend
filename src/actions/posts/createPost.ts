@@ -1,11 +1,10 @@
 "use server";
 
-import prisma from "@/utils/prismaClient";
 import { z } from "zod";
 import { getSession } from "../users/auth";
-import generateSlug from "@/utils/generateSlug";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import axiosInstance from "@/utils/axios";
 
 const schema = z.object({
   title: z.string({
@@ -37,7 +36,7 @@ export default async function createPost(prevState: any, formData: FormData) {
 
   const session = await getSession();
 
-  if (!session || !session.user?.email) {
+  if (!session) {
     return {
       message: "로그인이 필요합니다.",
       fieldErrors: {},
@@ -45,78 +44,23 @@ export default async function createPost(prevState: any, formData: FormData) {
   }
 
   if (validatedFields.data.slug) {
-    const newSlug = generateSlug(validatedFields.data.title);
-
-    let tag = await prisma.tag.findFirst({
-      where: {
-        name: validatedFields.data.tag,
-      },
+    await axiosInstance.put("/post", {
+      title: validatedFields.data.title,
+      content: validatedFields.data.content,
+      tagName: validatedFields.data.tag,
+      authorEmail: session.user?.email,
+      slug: validatedFields.data.slug,
     });
-
-    if (!tag) {
-      tag = await prisma.tag.create({
-        data: {
-          name: validatedFields.data.tag,
-        },
-      });
-    }
-
-    await prisma.post.update({
-      where: {
-        slug: validatedFields.data.slug,
-      },
-      data: {
-        title: validatedFields.data.title,
-        content: validatedFields.data.content,
-        slug: newSlug,
-        tag: {
-          connect: {
-            id: tag.id,
-          },
-        },
-      },
-    });
-
-    revalidatePath("/");
-    redirect("/");
   }
 
   try {
-    const slug = generateSlug(validatedFields.data.title);
-
-    let tag = await prisma.tag.findFirst({
-      where: {
-        name: validatedFields.data.tag,
-      },
-    });
-
-    if (!tag) {
-      tag = await prisma.tag.create({
-        data: {
-          name: validatedFields.data.tag,
-        },
-      });
-    }
-
-    await prisma.post.create({
-      data: {
-        title: validatedFields.data.title,
-        content: validatedFields.data.content,
-        slug,
-        author: {
-          connect: {
-            email: session.user.email,
-          },
-        },
-        tag: {
-          connect: {
-            id: tag.id,
-          },
-        },
-      },
+    await axiosInstance.post("/post", {
+      title: validatedFields.data.title,
+      content: validatedFields.data.content,
+      tagName: validatedFields.data.tag,
+      authorEmail: session.user?.email,
     });
   } catch (e) {
-    console.error(e);
     return {
       message: "게시물 작성에 실패했습니다.",
       fieldErrors: {},
