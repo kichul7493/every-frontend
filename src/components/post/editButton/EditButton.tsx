@@ -4,18 +4,12 @@ import { useRouter } from "next/navigation";
 import React from "react";
 
 interface EditButtonProps {
-  slug: string;
+  onClick: () => void;
 }
 
-const EditButton = ({ slug }: EditButtonProps) => {
-  const router = useRouter();
-
-  const moveEditPage = () => {
-    router.push(`/post/create?slug=${slug}`);
-  };
-
+const EditButton = ({ onClick }: EditButtonProps) => {
   return (
-    <button onClick={moveEditPage}>
+    <button onClick={onClick}>
       <svg
         width="28"
         height="28"

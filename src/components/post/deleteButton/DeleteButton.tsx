@@ -1,24 +1,13 @@
 "use client";
 
-import deletePost from "@/actions/posts/deletePost";
 import React from "react";
-import { useFormState } from "react-dom";
-
-export const initialState: {
-  fieldErrors: any;
-  message?: string;
-} = {
-  fieldErrors: {},
-  message: "",
-};
 
 interface DeleteButtonProps {
+  formAction: (payload: FormData) => void;
   slug: string;
 }
 
-const DeleteButton = ({ slug }: DeleteButtonProps) => {
-  const [state, formAction] = useFormState(deletePost, initialState);
-
+const DeleteButton = ({ formAction, slug }: DeleteButtonProps) => {
   return (
     <form className="h-7" action={formAction}>
       <input type="hidden" name="slug" value={slug} />

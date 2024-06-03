@@ -5,6 +5,7 @@ import { getSession } from "@/actions/users/auth";
 import PostContent from "@/components/post/detail/postContent/PostContent";
 import AuthorInfo from "@/components/post/detail/authorInfo/AuthorInfo";
 import PostTitle from "@/components/post/detail/postTitle/PostTitle";
+import PostControllButtons from "@/components/post/postControllButtons/PostControllButtons";
 
 const Page = async ({ params }: { params: { slug: string } }) => {
   const decodedSlug = decodeURIComponent(params.slug);
@@ -20,19 +21,19 @@ const Page = async ({ params }: { params: { slug: string } }) => {
   }
 
   return (
-    <>
-      <div className="mt-8 mb-7">
-        <PostTitle title={post.title} />
+    <div className="mt-8 mb-7">
+      <PostTitle title={post.title} />
+      <div className="w-full flex items-center justify-between">
         <AuthorInfo
           thumbnail={post.author.thumbnail}
           authorName={post.author.name}
           createdAt={formatDate(post.createdAt)}
-          isAuthor={isAuthor}
-          slug={decodedSlug}
         />
+        {isAuthor && <PostControllButtons slug={decodedSlug} />}
       </div>
+
       <PostContent content={post.content} />
-    </>
+    </div>
   );
 };
 
