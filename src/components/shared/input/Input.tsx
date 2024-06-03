@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import React, { HTMLInputTypeAttribute, InputHTMLAttributes } from "react";
+import React, { InputHTMLAttributes } from "react";
 
 interface InputProps {
   errors?: string[];
