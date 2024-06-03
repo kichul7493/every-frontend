@@ -1,9 +1,16 @@
 "use client";
 
 import deletePost from "@/actions/posts/deletePost";
-import { initialState } from "@/constants/formInitialState";
 import React from "react";
 import { useFormState } from "react-dom";
+
+export const initialState: {
+  fieldErrors: any;
+  message?: string;
+} = {
+  fieldErrors: {},
+  message: "",
+};
 
 interface DeleteButtonProps {
   slug: string;

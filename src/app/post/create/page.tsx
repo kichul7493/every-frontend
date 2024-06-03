@@ -7,7 +7,6 @@ import createPost from "@/actions/posts/createPost";
 import SubmitButton from "@/components/shared/submitButton/SubmitButton";
 import dynamic from "next/dynamic";
 import { toast } from "react-toastify";
-import { initialState } from "@/constants/formInitialState";
 import { useSearchParams } from "next/navigation";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
@@ -18,6 +17,17 @@ const CustomEditor = dynamic(
   },
   { ssr: false }
 );
+
+export const initialState: {
+  fieldErrors: {
+    title?: string[];
+    tag?: string[];
+  };
+  message?: string;
+} = {
+  fieldErrors: { title: [], tag: [] },
+  message: "",
+};
 
 const Page = () => {
   return (
