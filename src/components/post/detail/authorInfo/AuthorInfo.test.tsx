@@ -1,9 +1,19 @@
 import { render, screen } from "@testing-library/react";
 import AuthorInfo from "./AuthorInfo";
 
+const mockProps = {
+  thumbnail: "/images/avatar.jpg",
+  authorName: "John Doe",
+  createdAt: "2022-01-01",
+  isAuthor: true,
+  slug: "sample-post",
+};
+
+const deleteMock = jest.fn();
+
 jest.mock("react-dom", () => ({
   ...jest.requireActual("react-dom"),
-  useFormState: jest.fn(() => [{}, jest.fn()]),
+  useFormState: jest.fn(() => [{}, deleteMock]),
 }));
 
 jest.mock("@/actions/posts/deletePost", () => jest.fn());
@@ -13,14 +23,6 @@ jest.mock("next/navigation", () => ({
 }));
 
 describe("AuthorInfo", () => {
-  const mockProps = {
-    thumbnail: "/images/avatar.jpg",
-    authorName: "John Doe",
-    createdAt: "2022-01-01",
-    isAuthor: true,
-    slug: "sample-post",
-  };
-
   it("renders the author information correctly", () => {
     render(<AuthorInfo {...mockProps} />);
 
