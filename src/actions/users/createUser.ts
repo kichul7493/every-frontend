@@ -50,7 +50,6 @@ export default async function createUser(prevState: any, formData: FormData) {
 
   const { password, salt } = hash(validatedFields.data.password);
 
-  // 6자리의 랜덤 코드를 생성하는 함수를 작성해줘
   const code = generateRandomCode(6);
 
   try {

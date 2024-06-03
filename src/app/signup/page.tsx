@@ -6,6 +6,7 @@ import React from "react";
 import { useFormState } from "react-dom";
 import createUser from "../../actions/users/createUser";
 import SubmitButton from "@/components/shared/submitButton/SubmitButton";
+import Title from "@/components/shared/typography/Title";
 
 const initialState: {
   fieldErrors: {
@@ -24,7 +25,7 @@ const Page = () => {
   const [state, formAction] = useFormState(createUser, initialState);
   return (
     <>
-      <h1 className="text-4xl font-semibold text-center mb-14">회원가입</h1>
+      <Title>회원가입</Title>
       <form action={formAction}>
         <Input
           title="이름"
