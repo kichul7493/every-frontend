@@ -1,4 +1,3 @@
-import EmailIcon from "@/components/icons/EmailIcon";
 import Loader from "@/components/icons/Loader";
 import React from "react";
 import { useFormStatus } from "react-dom";
