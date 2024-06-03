@@ -9,6 +9,7 @@ const Loader = () => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className="animate-spin"
+      data-testid="loader"
     >
       <circle cx="14" cy="15" r="12" stroke="#5B39B8" strokeWidth="4" />
       <path
