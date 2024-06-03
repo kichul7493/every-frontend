@@ -17,7 +17,7 @@ const Input = ({
       <input
         className={clsx([
           "w-full bg-black100 text-sm placeholder:text-gray100 p-4 rounded-lg",
-          errors && "border-2 border-red-500",
+          errors && errors.length > 0 && "border-2 border-red-500",
         ])}
         {...rest}
         name={name}
