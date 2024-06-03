@@ -4,6 +4,7 @@ import generateSlug from "@/utils/generateSlug";
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
   const tag = req.nextUrl.searchParams.get("tag");
+  const page = req.nextUrl.searchParams.get("page");
 
   if (!tag) {
     return NextResponse.json(
@@ -38,11 +39,24 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
           },
         },
       },
+      orderBy: {
+        createdAt: "desc",
+      },
+      skip: page ? (parseInt(page) - 1) * 10 : 0,
+      take: 10,
     });
+
+    const totalPosts = await prisma.post.count();
+
+    const nextPage =
+      totalPosts > parseInt(page || "0") * 10
+        ? parseInt(page || "0") + 1
+        : null;
 
     return NextResponse.json(
       {
-        posts,
+        items: posts,
+        nextPage,
       },
       {
         status: 200,
@@ -75,11 +89,30 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
           },
         },
       },
+      orderBy: {
+        createdAt: "desc",
+      },
+      skip: page ? (parseInt(page) - 1) * 10 : 0,
+      take: 10,
     });
+
+    const totalPosts = await prisma.post.count({
+      where: {
+        tag: {
+          name: tag,
+        },
+      },
+    });
+
+    const nextPage =
+      totalPosts > parseInt(page || "0") * 10
+        ? parseInt(page || "0") + 1
+        : null;
 
     return NextResponse.json(
       {
-        posts,
+        items: posts,
+        nextPage,
       },
       {
         status: 200,
