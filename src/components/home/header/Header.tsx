@@ -8,7 +8,9 @@ interface Props {
 const Header = ({ isLogin }: Props) => {
   return (
     <div className="py-3 flex justify-between items-center mx-7">
-      <h1 className="text-3xl font-bold leading-8">Every</h1>
+      <Link href="/">
+        <h1 className="text-3xl font-bold leading-8">Every</h1>
+      </Link>
       {isLogin ? (
         <Link
           href="/post/create"
