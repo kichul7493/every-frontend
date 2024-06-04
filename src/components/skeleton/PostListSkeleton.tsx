@@ -8,6 +8,10 @@ const PostListSkeleton = () => {
       <PostItemSkeleton />
       <PostItemSkeleton />
       <PostItemSkeleton />
+      <PostItemSkeleton />
+      <PostItemSkeleton />
+      <PostItemSkeleton />
+      <PostItemSkeleton />
     </div>
   );
 };
