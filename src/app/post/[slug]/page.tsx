@@ -17,7 +17,7 @@ const Page = async ({ params }: { params: { slug: string } }) => {
   const isAuthor = post?.author.name === user?.user?.name;
 
   if (!post) {
-    return <div>포스트를 찾을 수 없습니다.</div>;
+    return <div className="text-center">포스트를 찾을 수 없습니다.</div>;
   }
 
   return (

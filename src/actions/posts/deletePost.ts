@@ -1,7 +1,6 @@
 "use server";
 
 import prisma from "@/utils/prismaClient";
-import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { getSession } from "../users/auth";
@@ -52,6 +51,5 @@ export default async function deletePost(prevState: any, formData: FormData) {
     };
   }
 
-  revalidatePath("/");
   redirect("/");
 }

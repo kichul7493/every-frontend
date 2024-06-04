@@ -2,7 +2,6 @@
 
 import { z } from "zod";
 import { getSession } from "../users/auth";
-import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import axiosInstance from "@/utils/axios";
 
@@ -44,29 +43,35 @@ export default async function createPost(prevState: any, formData: FormData) {
   }
 
   if (validatedFields.data.slug) {
-    await axiosInstance.put("/post", {
-      title: validatedFields.data.title,
-      content: validatedFields.data.content,
-      tagName: validatedFields.data.tag,
-      authorEmail: session.user?.email,
-      slug: validatedFields.data.slug,
-    });
+    try {
+      await axiosInstance.put("/post", {
+        title: validatedFields.data.title,
+        content: validatedFields.data.content,
+        tagName: validatedFields.data.tag,
+        authorEmail: session.user?.email,
+        slug: validatedFields.data.slug,
+      });
+    } catch (e) {
+      return {
+        message: "게시물 수정에 실패했습니다.",
+        fieldErrors: {},
+      };
+    }
+  } else {
+    try {
+      await axiosInstance.post("/post", {
+        title: validatedFields.data.title,
+        content: validatedFields.data.content,
+        tagName: validatedFields.data.tag,
+        authorEmail: session.user?.email,
+      });
+    } catch (e) {
+      return {
+        message: "게시물 작성에 실패했습니다.",
+        fieldErrors: {},
+      };
+    }
   }
 
-  try {
-    await axiosInstance.post("/post", {
-      title: validatedFields.data.title,
-      content: validatedFields.data.content,
-      tagName: validatedFields.data.tag,
-      authorEmail: session.user?.email,
-    });
-  } catch (e) {
-    return {
-      message: "게시물 작성에 실패했습니다.",
-      fieldErrors: {},
-    };
-  }
-
-  revalidatePath("/");
   redirect("/");
 }
