@@ -33,7 +33,7 @@ const LoginForm = () => {
         required
         onChange={handleChangeEmail}
         value={email}
-        errors={state.fieldErrors.email}
+        errors={state?.fieldErrors.email}
       />
       <Input
         name="password"
@@ -41,7 +41,7 @@ const LoginForm = () => {
         type="password"
         placeholder="비밀번호를 입력해주세요."
         required
-        errors={state.fieldErrors.password}
+        errors={state?.fieldErrors.password}
       />
       <div className="flex justify-between mb-20">
         <div className="flex items-center gap-2">
