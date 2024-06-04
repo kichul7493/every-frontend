@@ -18,7 +18,7 @@ const CustomEditor = dynamic(
   { ssr: false }
 );
 
-export const initialState: {
+const initialState: {
   fieldErrors: {
     title?: string[];
     tag?: string[];

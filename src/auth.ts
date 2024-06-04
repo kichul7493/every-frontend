@@ -21,17 +21,17 @@ export const {
           });
 
           if (!user || user.status !== "VERIFIED") {
-            throw new CredentialsSignin({
-              cause: "이메일 혹은 비밀번호가 올바르지 않습니다.",
-            });
+            throw new CredentialsSignin(
+              "이메일 혹은 비밀번호가 올바르지 않습니다."
+            );
           }
 
           const isValid = compare(password as string, user.password, user.salt);
 
           if (!isValid) {
-            throw new CredentialsSignin({
-              cause: "이메일 혹은 비밀번호가 올바르지 않습니다.",
-            });
+            throw new CredentialsSignin(
+              "이메일 혹은 비밀번호가 올바르지 않습니다."
+            );
           }
 
           return {
@@ -41,9 +41,9 @@ export const {
             image: "",
           };
         } else {
-          throw new CredentialsSignin({
-            cause: "이메일 혹은 비밀번호가 올바르지 않습니다.",
-          });
+          throw new CredentialsSignin(
+            "이메일 혹은 비밀번호가 올바르지 않습니다."
+          );
         }
       },
     }),
