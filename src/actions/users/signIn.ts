@@ -1,6 +1,6 @@
 "use server";
 
-import { auth, signIn, signOut, update } from "@/auth";
+import { signIn, signOut } from "@/auth";
 import { isRedirectError } from "next/dist/client/components/redirect";
 import { redirect } from "next/navigation";
 import { z } from "zod";
@@ -57,5 +57,3 @@ export const signInWithKaKao = async () => {
 export const signOutWithForm = async () => {
   await signOut();
 };
-
-export { auth as getSession, update as updateSession };

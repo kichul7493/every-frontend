@@ -1,6 +1,5 @@
 "use client";
 
-import { signInWithCredentials } from "@/actions/users/auth";
 import clsx from "clsx";
 import Link from "next/link";
 import React from "react";
@@ -8,6 +7,7 @@ import { useFormState } from "react-dom";
 import EmailLoginButton from "../emailLoginButton/EmailLoginButton";
 import Input from "@/components/shared/input/Input";
 import useRememberEmail from "@/hooks/login/useRememberEmail";
+import { signInWithCredentials } from "@/actions/users/signIn";
 
 const initialState: {
   fieldErrors: { email?: string[]; password?: string[] };

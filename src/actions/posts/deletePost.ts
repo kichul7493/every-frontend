@@ -1,9 +1,9 @@
 "use server";
 
+import { auth } from "@/auth";
 import prisma from "@/utils/prismaClient";
 import { redirect } from "next/navigation";
 import { z } from "zod";
-import { getSession } from "../users/auth";
 
 const schema = z.object({
   slug: z.string({
@@ -26,7 +26,7 @@ export default async function deletePost(prevState: any, formData: FormData) {
   const { slug } = validatedFields.data;
 
   try {
-    const session = await getSession();
+    const session = await auth();
 
     if (!session || !session.user?.email) {
       return {

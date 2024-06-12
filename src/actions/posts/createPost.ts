@@ -1,9 +1,9 @@
 "use server";
 
 import { z } from "zod";
-import { getSession } from "../users/auth";
 import { redirect } from "next/navigation";
 import axiosInstance from "@/utils/axios";
+import { auth } from "@/auth";
 
 const schema = z.object({
   title: z.string({
@@ -33,7 +33,7 @@ export default async function createPost(prevState: any, formData: FormData) {
     };
   }
 
-  const session = await getSession();
+  const session = await auth();
 
   if (!session) {
     return {
