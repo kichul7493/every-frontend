@@ -1,6 +1,7 @@
 import Loader from "@/components/icons/Loader";
 import React from "react";
 import { useFormStatus } from "react-dom";
+import Button from "../button/Button";
 
 interface SubmitButtonProps {
   children?: React.ReactNode;
@@ -9,14 +10,7 @@ interface SubmitButtonProps {
 const SubmitButton = ({ children }: SubmitButtonProps) => {
   const { pending } = useFormStatus();
 
-  return (
-    <button
-      type="submit"
-      className="w-full h-12 bg-main flex items-center justify-center gap-2 rounded-xl border-[1px] border-opacity-60 border-black"
-    >
-      {pending ? <Loader /> : children}
-    </button>
-  );
+  return <Button type="submit">{pending ? <Loader /> : children}</Button>;
 };
 
 export default SubmitButton;
