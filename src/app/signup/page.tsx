@@ -3,7 +3,7 @@
 import Input from "@/components/shared/input/Input";
 import Link from "next/link";
 import React from "react";
-import { useFormState } from "react-dom";
+import { useFormState, useFormStatus } from "react-dom";
 import createUser from "../../actions/users/createUser";
 import SubmitButton from "@/components/shared/submitButton/SubmitButton";
 import Title from "@/components/shared/typography/Title";
@@ -23,6 +23,8 @@ const initialState: {
 
 const Page = () => {
   const [state, formAction] = useFormState(createUser, initialState);
+  const { pending } = useFormStatus();
+
   return (
     <>
       <Title>회원가입</Title>
@@ -60,7 +62,7 @@ const Page = () => {
         />
 
         {state?.message && <span>{state.message}</span>}
-        <SubmitButton>회원가입</SubmitButton>
+        <SubmitButton isPending={pending}>회원가입</SubmitButton>
         <Link className="flex justify-center gap-2" href="/login">
           <span className="text-xs">이미 회원이신가요?</span>
           <span className="text-xs text-main">로그인</span>

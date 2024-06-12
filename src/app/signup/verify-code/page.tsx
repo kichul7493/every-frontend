@@ -5,9 +5,8 @@ import EmailHiddenInput from "@/components/shared/emailHiddenInput/EmailHiddenIn
 import Input from "@/components/shared/input/Input";
 import SubmitButton from "@/components/shared/submitButton/SubmitButton";
 import Title from "@/components/shared/typography/Title";
-import { useSearchParams } from "next/navigation";
 import React, { Suspense } from "react";
-import { useFormState } from "react-dom";
+import { useFormState, useFormStatus } from "react-dom";
 
 const initialState: {
   fieldErrors: {
@@ -21,6 +20,7 @@ const initialState: {
 
 const Page = () => {
   const [state, formAction] = useFormState(verifyEmail, initialState);
+  const { pending } = useFormStatus();
 
   return (
     <>
@@ -43,7 +43,7 @@ const Page = () => {
             <EmailHiddenInput />
           </Suspense>
         </div>
-        <SubmitButton>이메일 인증</SubmitButton>
+        <SubmitButton isPending={pending}>이메일 인증</SubmitButton>
       </form>
     </>
   );

@@ -3,11 +3,12 @@
 import clsx from "clsx";
 import Link from "next/link";
 import React from "react";
-import { useFormState } from "react-dom";
-import EmailLoginButton from "../emailLoginButton/EmailLoginButton";
+import { useFormState, useFormStatus } from "react-dom";
 import Input from "@/components/shared/input/Input";
 import useRememberEmail from "@/hooks/login/useRememberEmail";
 import { signInWithCredentials } from "@/actions/users/signIn";
+import SubmitButton from "@/components/shared/submitButton/SubmitButton";
+import EmailIcon from "@/components/icons/EmailIcon";
 
 const initialState: {
   fieldErrors: { email?: string[]; password?: string[] };
@@ -19,6 +20,7 @@ const initialState: {
 
 const LoginForm = () => {
   const [state, formAction] = useFormState(signInWithCredentials, initialState);
+  const { pending } = useFormStatus();
 
   const { email, remember, handleChangeEmail, handleChangeRemember } =
     useRememberEmail();
@@ -80,7 +82,10 @@ const LoginForm = () => {
           비밀번호 찾기
         </Link>
       </div>
-      <EmailLoginButton />
+      <SubmitButton isPending={pending}>
+        <EmailIcon />
+        <p className="text-sm font-semibold">이메일로 로그인</p>
+      </SubmitButton>
     </form>
   );
 };

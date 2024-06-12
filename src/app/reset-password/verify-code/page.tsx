@@ -6,7 +6,7 @@ import Input from "@/components/shared/input/Input";
 import SubmitButton from "@/components/shared/submitButton/SubmitButton";
 import Title from "@/components/shared/typography/Title";
 import React, { Suspense } from "react";
-import { useFormState } from "react-dom";
+import { useFormState, useFormStatus } from "react-dom";
 
 const initialState: {
   fieldErrors: {
@@ -22,6 +22,8 @@ const initialState: {
 
 const Page = () => {
   const [state, formAction] = useFormState(changePassword, initialState);
+
+  const { pending } = useFormStatus();
 
   return (
     <>
@@ -60,7 +62,7 @@ const Page = () => {
           </Suspense>
         </div>
 
-        <SubmitButton>비밀번호 변경</SubmitButton>
+        <SubmitButton isPending={pending}>비밀번호 변경</SubmitButton>
       </form>
     </>
   );

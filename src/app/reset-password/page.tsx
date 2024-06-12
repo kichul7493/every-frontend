@@ -5,7 +5,7 @@ import Input from "@/components/shared/input/Input";
 import SubmitButton from "@/components/shared/submitButton/SubmitButton";
 import Title from "@/components/shared/typography/Title";
 import React from "react";
-import { useFormState } from "react-dom";
+import { useFormState, useFormStatus } from "react-dom";
 
 const initialState: {
   fieldErrors: {
@@ -19,6 +19,8 @@ const initialState: {
 
 const Page = () => {
   const [state, formAction] = useFormState(sendVerifyCode, initialState);
+  const { pending } = useFormStatus();
+
   return (
     <>
       <Title>인증코드 전송</Title>
@@ -37,7 +39,7 @@ const Page = () => {
             errors={state?.fieldErrors?.email}
           />
         </div>
-        <SubmitButton>인증코드 전송</SubmitButton>
+        <SubmitButton isPending={pending}>인증코드 전송</SubmitButton>
       </form>
     </>
   );
