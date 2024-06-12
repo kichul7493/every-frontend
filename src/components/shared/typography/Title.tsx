@@ -1,12 +1,14 @@
-import React from "react";
+import React, { DetailsHTMLAttributes } from "react";
 
-interface TitleProps {
+interface TitleProps extends DetailsHTMLAttributes<HTMLHeadingElement> {
   children: string;
 }
 
-const Title = ({ children }: TitleProps) => {
+const Title = ({ children, ...rest }: TitleProps) => {
   return (
-    <h1 className="text-4xl font-semibold text-center mb-14">{children}</h1>
+    <h1 {...rest} className="text-4xl font-semibold text-center mb-14">
+      {children}
+    </h1>
   );
 };
 
