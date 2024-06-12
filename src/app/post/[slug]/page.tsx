@@ -1,18 +1,18 @@
 import { getPostWithSlug } from "@/actions/posts/getPostWithSlug";
 import formatDate from "@/utils/formatDate";
 import React from "react";
-import { getSession } from "@/actions/users/auth";
 import PostContent from "@/components/post/detail/postContent/PostContent";
 import AuthorInfo from "@/components/post/detail/authorInfo/AuthorInfo";
 import PostTitle from "@/components/post/detail/postTitle/PostTitle";
 import PostControllButtons from "@/components/post/postControllButtons/PostControllButtons";
+import { auth } from "@/auth";
 
 const Page = async ({ params }: { params: { slug: string } }) => {
   const decodedSlug = decodeURIComponent(params.slug);
 
   const post = await getPostWithSlug(decodedSlug);
 
-  const user = await getSession();
+  const user = await auth();
 
   const isAuthor = post?.author.name === user?.user?.name;
 
