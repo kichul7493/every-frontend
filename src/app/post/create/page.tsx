@@ -2,14 +2,13 @@
 
 import Input from "@/components/shared/input/Input";
 import React, { Suspense, useEffect, useState } from "react";
-import { useFormState } from "react-dom";
+import { useFormState, useFormStatus } from "react-dom";
 import createPost from "@/actions/posts/createPost";
 import SubmitButton from "@/components/shared/submitButton/SubmitButton";
 import dynamic from "next/dynamic";
 import { toast } from "react-toastify";
 import { useSearchParams } from "next/navigation";
-import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
+import useGetPostBySlug from "@/hooks/post/useGetPostBySlug";
 
 const CustomEditor = dynamic(
   () => {
@@ -39,26 +38,24 @@ const Page = () => {
 
 const PostCreatePage = () => {
   const searchParams = useSearchParams();
-
-  const [state, formAction] = useFormState(createPost, initialState);
   const slug = searchParams.get("slug");
 
-  const { data, isLoading } = useQuery({
-    queryKey: ["post", slug],
-    queryFn: () => axios.get(`/api/post/${slug}`),
-    enabled: !!slug,
-    gcTime: 0,
-  });
+  const [state, formAction] = useFormState(createPost, initialState);
+  const { pending } = useFormStatus();
+
+  const { data, isLoading } = useGetPostBySlug({ slug });
 
   const [title, setTitle] = useState("");
   const [tag, setTag] = useState("");
 
+  // 서버 에러 메시지 처리
   useEffect(() => {
     if (state.message) {
       toast.error(state.message);
     }
   }, [state]);
 
+  // 데이터가 있을 경우 제목과 태그 초기화
   useEffect(() => {
     if (data) {
       setTitle(data?.data.post.title);
@@ -97,7 +94,7 @@ const PostCreatePage = () => {
         <span className="block ml-1 mb-1">본문</span>
         <CustomEditor initData={data?.data.post.content} />
       </div>
-      <SubmitButton>글작성</SubmitButton>
+      <SubmitButton isPending={pending}>글작성</SubmitButton>
     </form>
   );
 };
