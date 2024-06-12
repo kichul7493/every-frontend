@@ -1,15 +1,13 @@
 import GoogleIcon from "@/components/icons/GoogleIcon";
+import Button from "@/components/shared/button/Button";
 import React from "react";
 
 const GoogleLoginButton = () => {
   return (
-    <button
-      type="button"
-      className="w-full bg-black100 flex items-center justify-center gap-2 py-3 rounded-xl border-[1px] border-opacity-60 border-black"
-    >
+    <Button type="button" variant="outlined">
       <GoogleIcon />
       <p className="text-sm font-semibold">구글로 로그인</p>
-    </button>
+    </Button>
   );
 };
 

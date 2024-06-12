@@ -1,15 +1,13 @@
 import KakaoIcon from "@/components/icons/KakaoIcon";
+import Button from "@/components/shared/button/Button";
 import React from "react";
 
 const KaKaoLoginButton = () => {
   return (
-    <button
-      type="button"
-      className="w-full bg-black100 flex items-center justify-center gap-2 py-3 rounded-xl border-[1px] border-opacity-60 border-black"
-    >
+    <Button variant="outlined">
       <KakaoIcon />
       <p className="text-sm font-semibold">카카오로 로그인</p>
-    </button>
+    </Button>
   );
 };
 

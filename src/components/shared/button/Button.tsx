@@ -14,7 +14,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const ButtonStyles: { [key in ButtonVariant]: string } = {
   filled: "bg-main border-[1px] border-opacity-60 border-black",
-  outlined: "bg-transparent border-[1px] border-black",
+  outlined: "bg-black100 border-[1px] border-opacity-60 border-black",
 };
 
 const Button = ({ children, variant = "filled", ...rest }: ButtonProps) => {
