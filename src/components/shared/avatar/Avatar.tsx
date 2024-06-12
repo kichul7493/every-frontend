@@ -7,12 +7,14 @@ interface AvatarProps {
 }
 
 const Avatar = ({ src, diameter = 32 }: AvatarProps) => {
-  if (!src)
-    return (
-      <div
-        className={`w-[${diameter}] h-[${diameter}] rounded-full bg-gray-400`}
-      ></div>
-    );
+  const getClassName = () => {
+    if (!src)
+      return `w-[${diameter}px] h-[${diameter}px] rounded-full bg-gray-400`;
+
+    return `w-[${diameter}px] h-[${diameter}px] rounded-full`;
+  };
+
+  if (!src) return <div className={getClassName()}></div>;
 
   return (
     <Image
@@ -20,7 +22,7 @@ const Avatar = ({ src, diameter = 32 }: AvatarProps) => {
       width={diameter}
       height={diameter}
       alt="thumbnail"
-      className={`w-[${diameter}] h-[${diameter}] rounded-full`}
+      className={getClassName()}
     />
   );
 };
