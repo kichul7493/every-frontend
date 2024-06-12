@@ -24,7 +24,7 @@ interface PostItemProps {
 
 const PostItem = ({ post }: PostItemProps) => {
   return (
-    <div className="mx-7 pb-4 mb-4 border-b-[1px] border-b-white">
+    <li className="mx-7 pb-4 mb-4 border-b-[1px] border-b-white">
       <Link href={`/post/${post.slug}`}>
         <div className="flex items-center gap-2 mb-3">
           <Avatar src={post.author.thumbnail} />
@@ -40,7 +40,7 @@ const PostItem = ({ post }: PostItemProps) => {
           </div>
         </div>
       </Link>
-    </div>
+    </li>
   );
 };
 
