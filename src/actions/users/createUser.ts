@@ -53,22 +53,15 @@ export default async function createUser(prevState: any, formData: FormData) {
   const code = generateRandomCode(6);
 
   try {
-    const user = await prisma.user.create({
-      data: {
-        email: validatedFields.data.email,
-        name: validatedFields.data.name,
-        password,
-        salt,
-        code,
-        status: "PENDING",
-      },
+    const newUser = await createNewUser({
+      email: validatedFields.data.email,
+      name: validatedFields.data.name,
+      password,
+      salt,
+      code,
     });
 
-    await sendMail({
-      to: user.email,
-      subject: "[Every] 회원가입을 축하합니다.",
-      html: `<h1>환영합니다, ${user.name}님!</h1><p>인증코드는 ${code}입니다.</p>`,
-    });
+    await sendAutCode(newUser.email, newUser.name, newUser.code);
   } catch (e: any) {
     if (e.code === "P2002") {
       return {
@@ -87,4 +80,39 @@ export default async function createUser(prevState: any, formData: FormData) {
     `/signup/verify-code?email=${validatedFields.data.email}`,
     RedirectType.push
   );
+}
+
+type CreateUserProps = {
+  email: string;
+  name: string;
+  password: string;
+  salt: string;
+  code: string;
+};
+
+async function createNewUser({
+  email,
+  name,
+  password,
+  salt,
+  code,
+}: CreateUserProps) {
+  return await prisma.user.create({
+    data: {
+      email: email,
+      name: name,
+      password,
+      salt,
+      code,
+      status: "PENDING",
+    },
+  });
+}
+
+async function sendAutCode(email: string, name: string, code: string) {
+  await sendMail({
+    to: email,
+    subject: "[Every] 회원가입을 축하합니다.",
+    html: `<h1>환영합니다, ${name}님!</h1><p>인증코드는 ${code}입니다.</p>`,
+  });
 }
