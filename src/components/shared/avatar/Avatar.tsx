@@ -3,18 +3,24 @@ import Image from "next/image";
 
 interface AvatarProps {
   src: string | null;
+  diameter?: number;
 }
 
-const Avatar = ({ src }: AvatarProps) => {
-  if (!src) return <div className="w-8 h-8 rounded-full bg-gray-400"></div>;
+const Avatar = ({ src, diameter = 32 }: AvatarProps) => {
+  if (!src)
+    return (
+      <div
+        className={`w-[${diameter}] h-[${diameter}] rounded-full bg-gray-400`}
+      ></div>
+    );
 
   return (
     <Image
       src={src}
-      width={32}
-      height={32}
+      width={diameter}
+      height={diameter}
       alt="thumbnail"
-      className="w-8 h-8 rounded-full"
+      className={`w-[${diameter}] h-[${diameter}] rounded-full`}
     />
   );
 };
