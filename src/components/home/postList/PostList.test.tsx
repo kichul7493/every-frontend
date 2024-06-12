@@ -1,15 +1,13 @@
 import { render, screen } from "@testing-library/react";
 import { useSearchParams } from "next/navigation";
-import { useSuspenseQuery } from "@tanstack/react-query";
 import PostList from "./PostList";
+import usePostInfiniteQuery from "@/hooks/post/usePostInfiniteQuery";
 
 jest.mock("next/navigation", () => ({
   useSearchParams: jest.fn(),
 }));
 
-jest.mock("@tanstack/react-query", () => ({
-  useSuspenseQuery: jest.fn(),
-}));
+jest.mock("@/hooks/post/usePostInfiniteQuery", () => jest.fn());
 
 jest.mock("@/actions/posts/getPostsWithTag", () => jest.fn());
 
@@ -56,8 +54,9 @@ describe("PostList", () => {
       get: jest.fn().mockReturnValue("all"),
     });
 
-    (useSuspenseQuery as jest.Mock).mockReturnValue({
-      data: { posts: mockPosts },
+    (usePostInfiniteQuery as jest.Mock).mockReturnValue({
+      pages: [{ items: mockPosts }],
+      isFetching: false,
     });
 
     render(<PostList />);
@@ -75,8 +74,9 @@ describe("PostList", () => {
       get: jest.fn().mockReturnValue("all"),
     });
 
-    (useSuspenseQuery as jest.Mock).mockReturnValue({
-      data: { posts: [] },
+    (usePostInfiniteQuery as jest.Mock).mockReturnValue({
+      pages: [{ items: [] }],
+      isFetching: false,
     });
 
     render(<PostList />);
