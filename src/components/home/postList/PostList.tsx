@@ -6,7 +6,7 @@ import usePostInfiniteQuery from "@/hooks/post/usePostInfiniteQuery";
 import React from "react";
 
 const PostList = () => {
-  const { pages, isFetching } = usePostInfiniteQuery();
+  const { pages, isFetchingNextPage } = usePostInfiniteQuery();
 
   return (
     <>
@@ -19,7 +19,7 @@ const PostList = () => {
           });
         })}
       </ul>
-      {isFetching && (
+      {isFetchingNextPage && (
         <div className="flex justify-center pb-4">
           <Loader />
         </div>

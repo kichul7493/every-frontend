@@ -8,7 +8,7 @@ const usePostInfiniteQuery = () => {
 
   const tag = searchParams.get("tag") || "all";
 
-  const { fetchNextPage, hasNextPage, isFetching, data } =
+  const { fetchNextPage, hasNextPage, isFetchingNextPage, data, isLoading } =
     useSuspenseInfiniteQuery({
       queryKey: ["posts", tag],
       queryFn: ({ pageParam }) => getPostsWithTag(tag, pageParam),
@@ -36,7 +36,8 @@ const usePostInfiniteQuery = () => {
 
   return {
     pages: data.pages,
-    isFetching,
+    isFetchingNextPage,
+    isLoading,
   };
 };
 

@@ -3,13 +3,11 @@ import { useSearchParams } from "next/navigation";
 import PostList from "./PostList";
 import usePostInfiniteQuery from "@/hooks/post/usePostInfiniteQuery";
 
-jest.mock("next/navigation", () => ({
-  useSearchParams: jest.fn(),
-}));
+jest.mock("next/navigation");
 
-jest.mock("@/hooks/post/usePostInfiniteQuery", () => jest.fn());
+jest.mock("@/hooks/post/usePostInfiniteQuery");
 
-jest.mock("@/actions/posts/getPostsWithTag", () => jest.fn());
+jest.mock("@/actions/posts/getPostsWithTag");
 
 const mockPosts = [
   {

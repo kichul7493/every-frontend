@@ -23,7 +23,7 @@ const Page = async ({ params }: { params: { slug: string } }) => {
   return (
     <div className="mt-8 mb-7">
       <PostTitle title={post.title} />
-      <div className="w-full flex items-center justify-between">
+      <div className="w-full mb-3 flex items-center justify-between">
         <AuthorInfo
           thumbnail={post.author.thumbnail}
           authorName={post.author.name}
