@@ -1,5 +1,13 @@
 import prisma from "@/utils/prismaClient";
 
+type CreateUserProps = {
+  email: string;
+  name: string;
+  password: string;
+  salt: string;
+  code: string;
+};
+
 export async function createUser({
   email,
   name,

@@ -50,17 +50,13 @@ export default async function createUserAction(
     };
   }
 
-  const { password, salt } = hash(validatedFields.data.password);
-
-  const code = generateRandomCode(6);
+  const { email, name, password } = validatedFields.data;
 
   try {
     createNewUser({
-      email: validatedFields.data.email,
-      name: validatedFields.data.name,
+      email,
+      name,
       password,
-      salt,
-      code,
     });
   } catch (e: any) {
     if (e.code === "P2002") {

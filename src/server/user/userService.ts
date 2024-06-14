@@ -3,17 +3,25 @@ import { sendCode, sendSignupEmail } from "../mail/mailService";
 import { createUser, findByEmail, update } from "./userRepository";
 import generateRandomCode from "@/utils/generateCode";
 
+type CreateUserProps = {
+  email: string;
+  name: string;
+  password: string;
+};
+
 export async function createNewUser({
   email,
   name,
   password,
-  salt,
-  code,
 }: CreateUserProps) {
+  const { password: hashedPassowrd, salt } = hash(password);
+
+  const code = generateRandomCode(6);
+
   const newUser = await createUser({
     email,
     name,
-    password,
+    password: hashedPassowrd,
     salt,
     code,
   });
@@ -75,6 +83,12 @@ export async function sendVerifyCode(email: string) {
 
   await sendCode(email, code);
 }
+
+type ChangePasswordProps = {
+  email: string;
+  password: string;
+  code: string;
+};
 
 export async function changePassword({
   email,
