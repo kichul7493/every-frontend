@@ -1,5 +1,6 @@
 "use server";
 
+import { changePassword } from "@/server/user/userService";
 import { hash } from "@/utils/passwordEncoder";
 import prisma from "@/utils/prismaClient";
 import { redirect } from "next/navigation";
@@ -31,7 +32,7 @@ const schema = z
     path: ["password"],
   });
 
-export default async function changePassword(
+export default async function changePasswordAction(
   prevState: any,
   formData: FormData
 ) {
@@ -49,31 +50,13 @@ export default async function changePassword(
     };
   }
 
+  const { email, password, code } = validatedFields.data;
+
   try {
-    const { password, salt } = hash(validatedFields.data.password);
-
-    const user = await prisma.user.findFirst({
-      where: {
-        email: validatedFields.data.email,
-        code: validatedFields.data.code,
-      },
-    });
-
-    if (!user) {
-      return {
-        message: "인증 코드가 일치하지 않습니다.",
-        fieldErrors: {},
-      };
-    }
-
-    await prisma.user.update({
-      where: {
-        id: user.id,
-      },
-      data: {
-        password,
-        salt,
-      },
+    await changePassword({
+      email,
+      password,
+      code,
     });
   } catch (e) {
     return {

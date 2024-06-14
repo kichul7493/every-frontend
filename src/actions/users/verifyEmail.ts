@@ -1,6 +1,6 @@
 "use server";
 
-import prisma from "@/utils/prismaClient";
+import { verifyUser } from "@/server/user/userService";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
@@ -19,13 +19,14 @@ const schema = z.object({
     }),
 });
 
-export default async function verifyEmail(prevState: any, formData: FormData) {
+export default async function verifyEmailAction(
+  prevState: any,
+  formData: FormData
+) {
   const validatedFields = schema.safeParse({
     email: formData.get("email"),
     code: formData.get("code"),
   });
-
-  console.log(validatedFields.data);
 
   if (!validatedFields.success) {
     return {
@@ -34,29 +35,10 @@ export default async function verifyEmail(prevState: any, formData: FormData) {
     };
   }
 
+  const { email, code } = validatedFields.data;
+
   try {
-    const user = await prisma.user.findFirst({
-      where: {
-        email: validatedFields.data.email,
-        code: validatedFields.data.code,
-      },
-    });
-
-    if (!user) {
-      return {
-        message: "인증 코드가 일치하지 않습니다.",
-        fieldErrors: {},
-      };
-    }
-
-    await prisma.user.update({
-      where: {
-        id: user.id,
-      },
-      data: {
-        status: "VERIFIED",
-      },
-    });
+    await verifyUser(email, code);
   } catch (e) {
     return {
       message: "인증 코드가 일치하지 않습니다.",

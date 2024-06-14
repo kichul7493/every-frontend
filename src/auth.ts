@@ -1,7 +1,6 @@
 import NextAuth, { CredentialsSignin } from "next-auth";
 import credentials from "next-auth/providers/credentials";
-import prisma from "./utils/prismaClient";
-import { compare } from "./utils/passwordEncoder";
+import { signin } from "./server/user/userService";
 
 export const {
   handlers,
@@ -14,32 +13,15 @@ export const {
     credentials({
       authorize: async ({ email, password }) => {
         if (email && password) {
-          const user = await prisma.user.findFirst({
-            where: {
-              email,
-            },
-          });
+          try {
+            const user = await signin(email as string, password as string);
 
-          if (!user || user.status !== "VERIFIED") {
+            return user;
+          } catch (error) {
             throw new CredentialsSignin(
               "이메일 혹은 비밀번호가 올바르지 않습니다."
             );
           }
-
-          const isValid = compare(password as string, user.password, user.salt);
-
-          if (!isValid) {
-            throw new CredentialsSignin(
-              "이메일 혹은 비밀번호가 올바르지 않습니다."
-            );
-          }
-
-          return {
-            id: user.id.toString(),
-            name: user.name,
-            email: user.email,
-            image: "",
-          };
         } else {
           throw new CredentialsSignin(
             "이메일 혹은 비밀번호가 올바르지 않습니다."

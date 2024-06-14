@@ -1,8 +1,6 @@
 "use server";
 
-import generateRandomCode from "@/utils/generateCode";
-import prisma from "@/utils/prismaClient";
-import sendMail from "@/utils/sendMail";
+import { sendVerifyCode } from "@/server/user/userService";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
@@ -14,7 +12,7 @@ const schema = z.object({
     .email("이메일 형식이 올바르지 않습니다."),
 });
 
-export default async function sendVerifyCode(
+export default async function sendVerifyCodeAction(
   prevState: any,
   formData: FormData
 ) {
@@ -29,36 +27,10 @@ export default async function sendVerifyCode(
     };
   }
 
-  const user = await prisma.user.findFirst({
-    where: {
-      email: validatedFields.data.email,
-    },
-  });
-
-  if (!user) {
-    return {
-      message: "가입되지 않은 이메일입니다.",
-      fieldErrors: {},
-    };
-  }
-
-  const code = generateRandomCode(6);
+  const { email } = validatedFields.data;
 
   try {
-    await prisma.user.update({
-      where: {
-        id: user.id,
-      },
-      data: {
-        code,
-      },
-    });
-
-    await sendMail({
-      to: user.email,
-      subject: "[Every] 인증 코드 발송",
-      html: "인증 코드: " + code,
-    });
+    await sendVerifyCode(email);
   } catch (e) {
     return {
       message: "인증 코드 전송에 실패했습니다.",
@@ -66,5 +38,5 @@ export default async function sendVerifyCode(
     };
   }
 
-  redirect("/reset-password/verify-code?email=" + user.email);
+  redirect("/reset-password/verify-code?email=" + email);
 }
